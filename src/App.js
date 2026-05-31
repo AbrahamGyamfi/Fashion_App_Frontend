@@ -227,11 +227,6 @@ function App() {
             {/* Collection grid */}
             <CollectionSpotlight onSelectCulture={handleCollectionSelect} />
 
-            {/* African Fashion Gallery — always featured */}
-            <AfricanFashionGallery
-              onShopAfrican={() => handleCollectionSelect('African')}
-            />
-
             {/* Shop section */}
             <div id="products-section" className="container">
               {error && (
@@ -341,6 +336,11 @@ function App() {
                 </div>
               )}
             </div>
+
+            {/* Ghana × Nigeria editorial — below products so shopping flow is uninterrupted */}
+            <AfricanFashionGallery
+              onShopAfrican={() => handleCollectionSelect('African')}
+            />
           </>
         )}
       </main>

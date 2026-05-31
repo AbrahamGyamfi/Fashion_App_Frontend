@@ -1,27 +1,43 @@
+/* ============================================================
+   PriceFilter — Compact inline price range inputs
+   ============================================================ */
+
 .price-filter {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: white;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 10px;
+  border: 1.5px solid #dedad4;
+  transition: border-color 0.2s;
 }
 
+.price-filter:focus-within { border-color: #0a0a0a; }
+
 .price-filter input {
-  width: 80px;
+  width: 76px;
   padding: 4px 8px;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  font-size: 14px;
+  border: 1px solid #eeece9;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  color: #1c1a17;
+  background: #fafaf9;
+  transition: border-color 0.2s;
 }
 
 .price-filter input:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: #0a0a0a;
+  background: white;
 }
 
+.price-filter input::placeholder { color: #c5c0b8; }
+
 .separator {
-  color: var(--text-secondary);
-  font-weight: 500;
+  color: #c5c0b8;
+  font-weight: 600;
+  font-size: 13px;
+  user-select: none;
 }

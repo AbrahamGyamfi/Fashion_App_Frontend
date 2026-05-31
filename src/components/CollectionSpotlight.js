@@ -7,7 +7,7 @@ const COLLECTIONS = [
     label: 'African Heritage',
     subtitle: 'Bold prints · Kente · Ankara',
     culture: 'African',
-    image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80',
+    image: '/images/african/ankara-dress-vibrant.jpg',
     accent: '#e67e22',
   },
   {

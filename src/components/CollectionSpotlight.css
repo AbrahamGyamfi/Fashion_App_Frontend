@@ -1,55 +1,67 @@
+/* ============================================================
+   CollectionSpotlight — Editorial culture-grid, magazine layout
+   ============================================================ */
+
 .collection-spotlight {
-  padding: 64px 24px;
+  padding: 72px 24px 56px;
   max-width: 1280px;
-  margin: 0 auto 48px;
+  margin: 0 auto 40px;
 }
 
 .collection-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 44px;
 }
 
 .collection-eyebrow {
-  font-size: 11px;
+  display: inline-block;
+  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--accent);
-  margin-bottom: 10px;
+  letter-spacing: 3px;
+  color: #C9A84C;
+  margin-bottom: 12px;
 }
 
 .collection-title {
   font-family: 'Bodoni Moda', serif;
-  font-size: 40px;
+  font-size: 2.8rem;
   font-weight: 700;
   letter-spacing: -1px;
-  color: var(--text-primary);
+  color: #1c1a17;
   margin-bottom: 10px;
 }
 
 .collection-sub {
   font-size: 15px;
-  color: var(--text-secondary);
-  font-weight: 400;
+  color: #8a8278;
+  font-weight: 300;
 }
 
-/* 4-column grid, first card is wider */
+/* ── 4-col grid, first card wider ─────────────── */
 .collection-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 16px;
+  gap: 14px;
   height: 420px;
 }
 
 .collection-card {
   position: relative;
   overflow: hidden;
-  border-radius: 16px;
+  border-radius: 14px;
   cursor: pointer;
   border: none;
   padding: 0;
   display: block;
   background: #111;
+  transition: transform 0.45s cubic-bezier(0.16,1,0.3,1),
+              box-shadow 0.45s cubic-bezier(0.16,1,0.3,1);
+}
+
+.collection-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 56px rgba(0,0,0,0.22);
 }
 
 .collection-img {
@@ -57,7 +69,7 @@
   inset: 0;
   background-size: cover;
   background-position: center;
-  transition: transform 0.6s cubic-bezier(0.4,0,0.2,1);
+  transition: transform 0.65s cubic-bezier(0.16,1,0.3,1);
 }
 
 .collection-card:hover .collection-img {
@@ -69,15 +81,11 @@
   inset: 0;
   background: linear-gradient(
     to top,
-    rgba(0,0,0,0.72) 0%,
-    rgba(0,0,0,0.2) 50%,
-    rgba(0,0,0,0.05) 100%
+    rgba(0,0,0,0.78) 0%,
+    rgba(0,0,0,0.18) 55%,
+    rgba(0,0,0,0.04) 100%
   );
   transition: opacity 0.3s;
-}
-
-.collection-card:hover .collection-overlay {
-  opacity: 1.15;
 }
 
 .collection-content {
@@ -85,7 +93,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 24px 20px;
+  padding: 22px 18px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -95,32 +103,36 @@
 
 .collection-label {
   font-family: 'Bodoni Moda', serif;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: 700;
   line-height: 1.2;
+  letter-spacing: -0.3px;
 }
 
 .collection-grid .collection-card:first-child .collection-label {
-  font-size: 28px;
+  font-size: 27px;
 }
 
 .collection-subtitle {
   font-size: 12px;
-  opacity: 0.75;
+  opacity: 0.68;
   font-weight: 400;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
 .collection-cta {
   margin-top: 8px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--accent, #d4af37);
+  letter-spacing: 2px;
+  color: var(--accent, #C9A84C);
   opacity: 0;
-  transform: translateY(6px);
+  transform: translateY(8px);
   transition: opacity 0.3s, transform 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .collection-card:hover .collection-cta {
@@ -128,25 +140,34 @@
   transform: translateY(0);
 }
 
-/* Thin accent bar at bottom on hover */
+/* Gold accent bar on bottom */
 .collection-card::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: var(--accent, #d4af37);
+  height: 2px;
+  background: var(--accent, #C9A84C);
   transform: scaleX(0);
-  transition: transform 0.3s;
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
   transform-origin: left;
 }
 
-.collection-card:hover::after {
-  transform: scaleX(1);
+.collection-card:hover::after { transform: scaleX(1); }
+
+/* ── Responsive ─────────────────────────────────── */
+@media (max-width: 1024px) {
+  .collection-grid {
+    grid-template-columns: 2fr 1fr 1fr;
+    height: 360px;
+  }
+  .collection-grid .collection-card:last-child {
+    display: none;
+  }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .collection-grid {
     grid-template-columns: 1fr 1fr;
     height: auto;
@@ -154,13 +175,14 @@
   }
   .collection-grid .collection-card:first-child {
     grid-column: span 2;
+    height: 240px;
   }
-  .collection-title {
-    font-size: 28px;
-  }
+  .collection-grid .collection-card:last-child { display: block; }
+  .collection-title { font-size: 2rem; }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 520px) {
+  .collection-spotlight { padding: 48px 16px 32px; }
   .collection-grid {
     grid-template-columns: 1fr;
     grid-template-rows: none;

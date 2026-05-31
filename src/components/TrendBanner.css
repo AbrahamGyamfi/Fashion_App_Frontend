@@ -1,41 +1,74 @@
+/* ============================================================
+   TrendBanner — Animated ticker, fashion editorial style
+   ============================================================ */
+
 .trend-banner {
-  background: #111;
-  color: #fff;
+  background: #0a0a0a;
+  color: #ffffff;
   overflow: hidden;
-  padding: 10px 0;
+  padding: 11px 0;
   white-space: nowrap;
   position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  user-select: none;
+}
+
+/* Fade edges */
+.trend-banner::before,
+.trend-banner::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.trend-banner::before {
+  left: 0;
+  background: linear-gradient(to right, #0a0a0a, transparent);
+}
+
+.trend-banner::after {
+  right: 0;
+  background: linear-gradient(to left, #0a0a0a, transparent);
 }
 
 .trend-track {
   display: inline-flex;
-  animation: marquee 30s linear infinite;
+  animation: marquee 36s linear infinite;
+  will-change: transform;
 }
 
-.trend-track:hover {
+.trend-banner:hover .trend-track {
   animation-play-state: paused;
 }
 
 .trend-item {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  font-size: 12px;
-  font-weight: 600;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  padding: 0 28px;
+  letter-spacing: 2px;
+  padding: 0 30px;
   white-space: nowrap;
-  color: #f5f5f5;
+  color: rgba(255,255,255,0.72);
+  transition: color 0.2s;
 }
 
+.trend-item:hover { color: white; }
+
 .trend-dot {
-  color: #d4af37;
-  font-size: 8px;
+  color: #C9A84C;
+  font-size: 7px;
   line-height: 1;
+  flex-shrink: 0;
 }
 
 @keyframes marquee {
-  0% { transform: translateX(0); }
+  0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }

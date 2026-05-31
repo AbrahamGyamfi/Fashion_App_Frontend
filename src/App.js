@@ -18,6 +18,7 @@ import Orders from './pages/Orders';
 import Analytics from './pages/Analytics';
 import TrendBanner from './components/TrendBanner';
 import CollectionSpotlight from './components/CollectionSpotlight';
+import AfricanFashionGallery from './components/AfricanFashionGallery';
 
 const SkeletonCard = () => (
   <div className="skeleton-card">
@@ -225,6 +226,11 @@ function App() {
 
             {/* Collection grid */}
             <CollectionSpotlight onSelectCulture={handleCollectionSelect} />
+
+            {/* African Fashion Gallery — always featured */}
+            <AfricanFashionGallery
+              onShopAfrican={() => handleCollectionSelect('African')}
+            />
 
             {/* Shop section */}
             <div id="products-section" className="container">

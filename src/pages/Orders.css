@@ -1,93 +1,100 @@
-.orders-page {
-  max-width: 1400px;
-}
+/* ============================================================
+   Admin Orders — Table view with status badges
+   ============================================================ */
+
+.orders-page { max-width: 1200px; }
 
 .orders-table-container {
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06), 0 2px 12px rgba(0,0,0,0.03);
   overflow-x: auto;
-  margin-bottom: 2rem;
+  margin-bottom: 24px;
+  border: 1px solid #f2f0ed;
 }
 
 .orders-table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 14px;
 }
 
-.orders-table thead {
-  background: var(--gray-100);
-}
+.orders-table thead { background: #fafaf9; }
 
 .orders-table th {
-  padding: 1rem;
+  padding: 14px 16px;
   text-align: left;
-  font-weight: 600;
-  color: var(--gray-800);
-  font-size: 0.875rem;
+  font-weight: 700;
+  color: #8a8278;
+  font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.8px;
+  border-bottom: 1px solid #f2f0ed;
+  white-space: nowrap;
 }
 
 .orders-table td {
-  padding: 1rem;
-  border-top: 1px solid var(--gray-200);
+  padding: 13px 16px;
+  border-top: 1px solid #f7f6f4;
+  color: #1c1a17;
+  vertical-align: middle;
 }
 
+.orders-table tbody tr:hover { background: #fafaf9; }
+
 .order-id {
-  font-weight: 600;
-  color: var(--primary);
+  font-weight: 700;
+  color: #C9A84C;
+  font-family: 'Bodoni Moda', serif;
 }
 
 .total {
-  font-weight: 600;
-  color: var(--gray-800);
+  font-weight: 700;
+  color: #1c1a17;
+  font-family: 'Bodoni Moda', serif;
 }
 
-.status-badge.pending {
-  background: #fef3c7;
-  color: #92400e;
+/* Status badges */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.status-badge.processing {
-  background: #dbeafe;
-  color: #1e40af;
-}
+.status-badge.pending    { background: #fef3c7; color: #92400e; }
+.status-badge.processing { background: #dbeafe; color: #1e40af; }
+.status-badge.shipped    { background: #ede9fe; color: #4c1d95; }
+.status-badge.delivered  { background: #dcfce7; color: #16a34a; }
 
-.status-badge.shipped {
-  background: #e0e7ff;
-  color: #4338ca;
-}
-
-.status-badge.delivered {
-  background: #d1fae5;
-  color: #065f46;
-}
-
+/* View button */
 .btn-view {
-  padding: 0.5rem 1rem;
-  background: var(--primary);
+  padding: 6px 14px;
+  background: #0a0a0a;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 600;
   transition: background 0.2s;
+  font-family: inherit;
 }
 
-.btn-view:hover {
-  background: var(--primary-dark);
-}
+.btn-view:hover { background: #2a2a2a; }
 
+/* Info box */
 .info-box {
-  background: #dbeafe;
-  border: 1px solid #93c5fd;
-  border-radius: 8px;
-  padding: 1rem;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  padding: 14px 18px;
   color: #1e40af;
-}
-
-.info-box p {
-  margin: 0;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

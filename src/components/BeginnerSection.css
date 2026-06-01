@@ -79,7 +79,7 @@
 
 .beginner-cta:hover { background: #d35400; transform: translateY(-1px); }
 
-.beginner-hero-icons {
+.beginner-hero-pills {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -87,12 +87,23 @@
   z-index: 1;
 }
 
-.beginner-hero-icon-pill {
-  padding: 10px 18px;
+.beginner-hero-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
   border-radius: 8px;
   font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
+}
+
+.beginner-hero-pill-icon {
+  display: flex;
+  align-items: center;
+  color: rgba(255,255,255,0.6);
 }
 
 /* ── Occasion header ── */
@@ -119,8 +130,8 @@
 }
 
 .beginner-occ-card {
-  background: var(--obg, #f5f5f5);
-  border: 2px solid transparent;
+  background: #fff;
+  border: 1.5px solid #e5e0d8;
   border-radius: 10px;
   padding: 18px 14px;
   cursor: pointer;
@@ -128,40 +139,51 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   transition: all 0.18s;
 }
 
 .beginner-occ-card:hover {
-  border-color: var(--oc, #e67e22);
+  border-color: #111;
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(0,0,0,0.08);
 }
 
 .beginner-occ-card.active {
-  border-color: var(--oc, #e67e22);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--oc) 20%, transparent);
+  background: #111;
+  border-color: #111;
 }
 
-.beginner-occ-icon { font-size: 1.6rem; line-height: 1; }
+.beginner-occ-card.active .beginner-occ-icon,
+.beginner-occ-card.active .beginner-occ-name,
+.beginner-occ-card.active .beginner-occ-level {
+  color: #fff;
+}
+
+.beginner-occ-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
 
 .beginner-occ-name {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 800;
   color: #111;
 }
 
 .beginner-occ-level {
-  font-size: 0.68rem;
+  font-size: 0.65rem;
   font-weight: 600;
-  color: var(--oc, #888);
+  color: #999;
   letter-spacing: 0.04em;
 }
 
 /* ── Guide panel ── */
 .beginner-guide-panel {
   background: #fff;
-  border: 1.5px solid var(--oc, #e67e22);
+  border: 1.5px solid #111;
   border-radius: 12px;
   overflow: hidden;
   animation: guide-in 0.2s ease;
@@ -174,42 +196,60 @@
 
 .beginner-guide-header {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  padding: 24px 28px 16px;
-  background: var(--obg, #fff4e6);
-  border-bottom: 1px solid rgba(0,0,0,0.06);
+  align-items: center;
+  gap: 14px;
+  padding: 22px 28px 18px;
+  background: #f5f3f0;
+  border-bottom: 1px solid #e5e0d8;
 }
 
-.beginner-guide-eyebrow {
+.beginner-guide-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: #111;
+  color: #fff;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.beginner-guide-level {
   display: block;
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--oc, #e67e22);
-  margin-bottom: 4px;
+  letter-spacing: 0.14em;
+  color: #999;
+  margin-bottom: 3px;
 }
 
 .beginner-guide-title {
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 800;
   color: #111;
   margin: 0;
+  flex: 1;
 }
 
 .beginner-guide-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 32px;
   height: 32px;
-  background: rgba(0,0,0,0.08);
+  background: #ece9e3;
   border: none;
   border-radius: 50%;
-  font-size: 1.1rem;
   cursor: pointer;
   color: #555;
-  line-height: 1;
+  margin-left: auto;
   flex-shrink: 0;
+  transition: background 0.15s;
 }
+
+.beginner-guide-close:hover { background: #ddd; }
 
 /* ── Steps ── */
 .beginner-steps {
@@ -233,7 +273,7 @@
   width: 28px;
   height: 28px;
   min-width: 28px;
-  background: var(--oc, #e67e22);
+  background: #111;
   color: #fff;
   border-radius: 50%;
   font-size: 0.75rem;
@@ -255,7 +295,7 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--oc, #e67e22);
+  color: #888;
 }
 
 .beginner-step-item {
@@ -274,26 +314,24 @@
 /* ── Golden Rule ── */
 .beginner-rule {
   margin: 0;
-  padding: 18px 28px 22px;
-  background: var(--obg, #fff4e6);
-  border-top: 1px solid rgba(0,0,0,0.06);
+  padding: 16px 28px 20px;
+  background: #f5f3f0;
+  border-top: 1px solid #e5e0d8;
   display: flex;
-  flex-direction: column;
-  gap: 5px;
+  align-items: flex-start;
+  gap: 10px;
 }
 
-.beginner-rule-label {
-  font-size: 10px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--oc, #e67e22);
+.beginner-rule-icon {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: #888;
 }
 
 .beginner-rule-text {
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-style: italic;
-  color: #444;
+  color: #555;
   line-height: 1.65;
   margin: 0;
 }
@@ -350,7 +388,11 @@
   transform: translateY(-2px);
 }
 
-.beginner-capsule-icon { font-size: 1.4rem; }
+.beginner-capsule-icon {
+  display: flex;
+  align-items: center;
+  color: #333;
+}
 
 .beginner-capsule-item {
   font-size: 0.82rem;

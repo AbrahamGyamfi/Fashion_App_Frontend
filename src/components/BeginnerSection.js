@@ -1,15 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './BeginnerSection.css';
+import {
+  BriefcaseIcon, HeartOutlineIcon, RingsIcon, SunIcon,
+  MoonIcon, CoffeeIcon, GlobeIcon, ClipboardIcon,
+  ShirtIcon, JeansIcon, JacketIcon, ShoeIcon,
+  DressIcon, BagIcon, HeelIcon, TrousersIcon,
+} from './icons';
 
 const OCCASIONS = [
   {
     id: 'interview',
-    icon: '💼',
+    Icon: BriefcaseIcon,
     title: 'Job Interview',
     level: 'Formal',
-    color: '#2980b9',
-    bg: '#eaf4fb',
     steps: [
       { step: 'Base', item: 'White button-down or plain blouse', tip: 'Fitted but not tight. Iron it.' },
       { step: 'Bottoms', item: 'Dark slim trousers or pencil skirt', tip: 'Black, navy, or charcoal. No patterns.' },
@@ -21,11 +25,9 @@ const OCCASIONS = [
   },
   {
     id: 'date',
-    icon: '✨',
+    Icon: HeartOutlineIcon,
     title: 'First Date',
     level: 'Smart Casual',
-    color: '#c0392b',
-    bg: '#fdf3f2',
     steps: [
       { step: 'Statement', item: 'Bold top OR interesting trousers — pick ONE', tip: 'Not both. Balance is everything.' },
       { step: 'Pair with', item: 'A simple complementing piece', tip: 'Bold top? Plain jeans. Bold trousers? Simple top.' },
@@ -37,14 +39,12 @@ const OCCASIONS = [
   },
   {
     id: 'wedding',
-    icon: '💒',
+    Icon: RingsIcon,
     title: 'Wedding Guest',
     level: 'Smart to Formal',
-    color: '#8e44ad',
-    bg: '#f5eefb',
     steps: [
       { step: 'Dress', item: 'Midi or maxi in a safe colour', tip: 'Dusty rose, sage green, navy — never white.' },
-      { step: 'Shoes', item: 'Heeled sandals or court shoes', tip: 'Wedges if there\'s grass.' },
+      { step: 'Shoes', item: 'Heeled sandals or court shoes', tip: "Wedges if there's grass." },
       { step: 'Bag', item: 'Small satin or embroidered clutch', tip: 'No daytime totes.' },
       { step: 'Cover-up', item: 'Chiffon wrap or tailored jacket', tip: 'Needed for places of worship.' },
       { step: 'Hair', item: 'Up or half-up style', tip: 'Shows your outfit and stays neat all day.' },
@@ -53,11 +53,9 @@ const OCCASIONS = [
   },
   {
     id: 'casual',
-    icon: '☀️',
+    Icon: SunIcon,
     title: 'Casual Day Out',
     level: 'Casual',
-    color: '#e67e22',
-    bg: '#fff4e6',
     steps: [
       { step: 'Base', item: 'Clean, well-fitted jeans (dark wash)', tip: 'No rips, no logos for versatility.' },
       { step: 'Top', item: 'Plain tee, subtle stripe, or neat polo', tip: 'Tucked in = smarter, untucked = relaxed.' },
@@ -65,15 +63,13 @@ const OCCASIONS = [
       { step: 'Layer', item: 'Knit cardigan or unstructured blazer', tip: 'Easy to tie around your waist if warm.' },
       { step: 'Accessories', item: 'Watch + belt in matching tones', tip: 'Matching metals keep it cohesive.' },
     ],
-    rule: 'Smart casual: no logo tees, no athletic wear, no sandals unless it\'s beach weather.',
+    rule: "Smart casual: no logo tees, no athletic wear, no sandals unless it's beach weather.",
   },
   {
     id: 'nightout',
-    icon: '🌙',
+    Icon: MoonIcon,
     title: 'Night Out',
     level: 'Evening',
-    color: '#1a1a2e',
-    bg: '#f0eeff',
     steps: [
       { step: 'Silhouette', item: 'Bodycon mini, satin slip, or wide-leg trousers + crop', tip: 'Pick a clear intention.' },
       { step: 'Shoes', item: 'Any heel makes it night-out ready', tip: 'Even a kitten heel counts.' },
@@ -85,11 +81,9 @@ const OCCASIONS = [
   },
   {
     id: 'brunch',
-    icon: '🥂',
+    Icon: CoffeeIcon,
     title: 'Brunch / Lunch',
     level: 'Casual to Smart',
-    color: '#27ae60',
-    bg: '#eafaf1',
     steps: [
       { step: 'Outfit', item: 'Floaty midi dress or matching co-ord set', tip: 'Effortless is the goal.' },
       { step: 'Shoes', item: 'Strappy flat sandals or low mules', tip: 'Comfort first — you may walk.' },
@@ -101,11 +95,9 @@ const OCCASIONS = [
   },
   {
     id: 'cultural',
-    icon: '🌍',
+    Icon: GlobeIcon,
     title: 'African Cultural Event',
     level: 'Traditional to Formal',
-    color: '#e67e22',
-    bg: '#fff4e6',
     steps: [
       { step: 'Fabric', item: 'Ankara, Kente, or Aso-Ebi — choose one', tip: 'One fabric per look. Let it speak.' },
       { step: 'Silhouette', item: 'Kaba & Slit, Iro & Buba, or fitted Ankara dress', tip: 'Match to the formality of the event.' },
@@ -117,11 +109,9 @@ const OCCASIONS = [
   },
   {
     id: 'work',
-    icon: '📋',
+    Icon: ClipboardIcon,
     title: 'Everyday Work',
     level: 'Business Casual',
-    color: '#555',
-    bg: '#f5f5f5',
     steps: [
       { step: 'Trousers', item: 'Tailored trousers or pencil skirt', tip: 'Fits properly — not too tight, not baggy.' },
       { step: 'Top', item: 'Neat blouse, turtleneck, or button-down', tip: 'Ironed. Always ironed.' },
@@ -134,15 +124,25 @@ const OCCASIONS = [
 ];
 
 const CAPSULE = [
-  { item: 'White T-Shirt', why: 'Pairs with everything. Your most-worn item.', icon: '👕' },
-  { item: 'Dark Straight Jeans', why: 'Casual to smart casual in seconds.', icon: '👖' },
-  { item: 'Neutral Blazer', why: 'Elevates any outfit instantly.', icon: '🧥' },
-  { item: 'White Trainers', why: 'Works with 80% of your wardrobe.', icon: '👟' },
-  { item: 'Black Trousers', why: 'The most versatile formal bottom.', icon: '👔' },
-  { item: 'Simple Midi Dress', why: 'One piece = complete outfit.', icon: '👗' },
-  { item: 'Quality Tote Bag', why: 'Day to evening, always appropriate.', icon: '👜' },
-  { item: 'Block Heel Sandals', why: 'Comfortable and dress-up ready.', icon: '👡' },
+  { item: 'White T-Shirt',       why: 'Pairs with everything. Your most-worn item.',     Icon: ShirtIcon },
+  { item: 'Dark Straight Jeans', why: 'Casual to smart casual in seconds.',               Icon: JeansIcon },
+  { item: 'Neutral Blazer',      why: 'Elevates any outfit instantly.',                   Icon: JacketIcon },
+  { item: 'White Trainers',      why: 'Works with 80% of your wardrobe.',                 Icon: ShoeIcon },
+  { item: 'Black Trousers',      why: 'The most versatile formal bottom.',                Icon: TrousersIcon },
+  { item: 'Simple Midi Dress',   why: 'One piece = complete outfit.',                     Icon: DressIcon },
+  { item: 'Quality Tote Bag',    why: 'Day to evening, always appropriate.',              Icon: BagIcon },
+  { item: 'Block Heel Sandals',  why: 'Comfortable and dress-up ready.',                  Icon: HeelIcon },
 ];
+
+/* Inline tip icon — small lightbulb SVG */
+const TipIcon = () => (
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+    stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="9" y1="18" x2="15" y2="18"/>
+    <line x1="10" y1="22" x2="14" y2="22"/>
+    <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"/>
+  </svg>
+);
 
 function BeginnerSection({ onViewOutfits }) {
   const [selected, setSelected] = useState(null);
@@ -150,23 +150,24 @@ function BeginnerSection({ onViewOutfits }) {
   return (
     <div className="beginner-section">
 
-      {/* Hero banner */}
+      {/* Hero */}
       <div className="beginner-hero">
         <div className="beginner-hero-text">
           <span className="beginner-eyebrow">Fashion for Everyone</span>
           <h2 className="beginner-title">Not Sure What to Wear?</h2>
           <p className="beginner-desc">
-            Tell us your occasion and we'll show you exactly what to wear —
-            step by step, piece by piece. No fashion experience needed.
+            Pick your occasion and get a complete head-to-toe outfit guide —
+            step by step, piece by piece. No fashion knowledge needed.
           </p>
           <button className="beginner-cta" onClick={onViewOutfits}>
             Browse All Outfit Ideas →
           </button>
         </div>
-        <div className="beginner-hero-icons">
+        <div className="beginner-hero-pills">
           {OCCASIONS.slice(0, 4).map(o => (
-            <div key={o.id} className="beginner-hero-icon-pill" style={{ background: o.bg, color: o.color }}>
-              {o.icon} {o.title}
+            <div key={o.id} className="beginner-hero-pill">
+              <span className="beginner-hero-pill-icon"><o.Icon size={16} /></span>
+              {o.title}
             </div>
           ))}
         </div>
@@ -175,7 +176,7 @@ function BeginnerSection({ onViewOutfits }) {
       {/* Occasion grid */}
       <div className="beginner-occ-header">
         <h3 className="beginner-occ-title">Pick Your Occasion</h3>
-        <p className="beginner-occ-sub">Click any occasion to get a complete head-to-toe outfit guide</p>
+        <p className="beginner-occ-sub">Click any tile to get a complete outfit guide</p>
       </div>
 
       <div className="beginner-occ-grid">
@@ -183,25 +184,30 @@ function BeginnerSection({ onViewOutfits }) {
           <button
             key={occ.id}
             className={`beginner-occ-card ${selected?.id === occ.id ? 'active' : ''}`}
-            style={{ '--oc': occ.color, '--obg': occ.bg }}
             onClick={() => setSelected(selected?.id === occ.id ? null : occ)}
           >
-            <span className="beginner-occ-icon">{occ.icon}</span>
+            <span className="beginner-occ-icon"><occ.Icon size={24} /></span>
             <span className="beginner-occ-name">{occ.title}</span>
             <span className="beginner-occ-level">{occ.level}</span>
           </button>
         ))}
       </div>
 
-      {/* Expanded outfit guide */}
+      {/* Expanded guide panel */}
       {selected && (
-        <div className="beginner-guide-panel" style={{ '--oc': selected.color, '--obg': selected.bg }}>
+        <div className="beginner-guide-panel">
           <div className="beginner-guide-header">
+            <div className="beginner-guide-header-icon"><selected.Icon size={20} /></div>
             <div>
-              <span className="beginner-guide-eyebrow">{selected.icon} {selected.level}</span>
+              <span className="beginner-guide-level">{selected.level}</span>
               <h3 className="beginner-guide-title">What to Wear: {selected.title}</h3>
             </div>
-            <button className="beginner-guide-close" onClick={() => setSelected(null)}>×</button>
+            <button className="beginner-guide-close" onClick={() => setSelected(null)}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+              </svg>
+            </button>
           </div>
 
           <div className="beginner-steps">
@@ -211,14 +217,22 @@ function BeginnerSection({ onViewOutfits }) {
                 <div className="beginner-step-body">
                   <span className="beginner-step-label">{s.step}</span>
                   <span className="beginner-step-item">{s.item}</span>
-                  <span className="beginner-step-tip">💡 {s.tip}</span>
+                  <span className="beginner-step-tip">
+                    <TipIcon /> {s.tip}
+                  </span>
                 </div>
               </div>
             ))}
           </div>
 
           <div className="beginner-rule">
-            <span className="beginner-rule-label">Golden Rule</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+              className="beginner-rule-icon">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="8" x2="12" y2="12"/>
+              <line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
             <p className="beginner-rule-text">"{selected.rule}"</p>
           </div>
         </div>
@@ -227,15 +241,13 @@ function BeginnerSection({ onViewOutfits }) {
       {/* Capsule wardrobe */}
       <div className="beginner-capsule">
         <div className="beginner-capsule-header">
-          <div>
-            <h3 className="beginner-capsule-title">Your Starter Capsule Wardrobe</h3>
-            <p className="beginner-capsule-sub">8 pieces that create 30+ outfits. Build this first.</p>
-          </div>
+          <h3 className="beginner-capsule-title">Your Starter Capsule Wardrobe</h3>
+          <p className="beginner-capsule-sub">8 pieces that create 30+ outfits. Build this first.</p>
         </div>
         <div className="beginner-capsule-grid">
           {CAPSULE.map((c, i) => (
             <div key={i} className="beginner-capsule-card">
-              <span className="beginner-capsule-icon">{c.icon}</span>
+              <span className="beginner-capsule-icon"><c.Icon size={26} /></span>
               <span className="beginner-capsule-item">{c.item}</span>
               <span className="beginner-capsule-why">{c.why}</span>
             </div>

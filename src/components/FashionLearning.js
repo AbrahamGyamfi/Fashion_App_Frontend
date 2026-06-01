@@ -3,39 +3,22 @@ import axios from 'axios';
 import './FashionLearning.css';
 import StyleQuiz from './StyleQuiz';
 import BeginnerSection from './BeginnerSection';
-
-/* ── Icons ── */
-const EyeIcon = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
-  </svg>
-);
-const HeartIcon = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-  </svg>
-);
-const ClockIcon = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-  </svg>
-);
-const BackIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-    <polyline points="15 18 9 12 15 6"/>
-  </svg>
-);
+import {
+  EyeIcon, HeartIcon, ClockIcon, BackIcon,
+  CultureIcon, SparkleIcon, TrendIcon, BookIcon,
+  OutfitHelpIcon, QuizIcon,
+} from './icons';
 
 /* ── Helpers ── */
 const CATEGORY_META = {
-  'Cultural Fashion': { icon: '🌍', color: '#e67e22', bg: '#fff4e6' },
-  'Styling Tips':     { icon: '✨', color: '#8e44ad', bg: '#f5eefb' },
-  'Trends':           { icon: '📈', color: '#2980b9', bg: '#eaf4fb' },
-  'Fashion Education':{ icon: '📚', color: '#27ae60', bg: '#eafaf1' },
+  'Cultural Fashion': { Icon: CultureIcon,  color: '#e67e22', bg: '#fff4e6' },
+  'Styling Tips':     { Icon: SparkleIcon,  color: '#8e44ad', bg: '#f5eefb' },
+  'Trends':           { Icon: TrendIcon,    color: '#2980b9', bg: '#eaf4fb' },
+  'Fashion Education':{ Icon: BookIcon,     color: '#27ae60', bg: '#eafaf1' },
 };
 
 function catMeta(cat) {
-  return CATEGORY_META[cat] || { icon: '🏷️', color: '#555', bg: '#f5f5f5' };
+  return CATEGORY_META[cat] || { Icon: BookIcon, color: '#555', bg: '#f5f5f5' };
 }
 
 function readTime(text) {
@@ -103,7 +86,7 @@ function GuideDetail({ guide, guides, onBack, onLike, onOpen }) {
           </div>
           <div className="lh-detail-content">
             <span className="lh-detail-cat" style={{ background: cm.bg, color: cm.color }}>
-              {cm.icon} {guide.category}
+              <cm.Icon size={13} /> {guide.category}
             </span>
             <h1 className="lh-detail-title">{guide.title}</h1>
             <div className="lh-detail-meta">
@@ -141,7 +124,7 @@ function GuideDetail({ guide, guides, onBack, onLike, onOpen }) {
                     </div>
                     <div className="lh-related-body">
                       <span className="lh-card-cat" style={{ background: rcm.bg, color: rcm.color }}>
-                        {rcm.icon} {g.category}
+                        <rcm.Icon size={13} /> {g.category}
                       </span>
                       <h4 className="lh-related-card-title">{g.title}</h4>
                       <span className="lh-related-read-time"><ClockIcon /> {readTime(g.content)}</span>
@@ -319,8 +302,10 @@ function FashionLearning({ onShopCulture }) {
             <div className="lh-featured-overlay" />
             <div className="lh-featured-content">
               <span className="lh-featured-label">Featured Guide</span>
+              {/* featured category icon */}
               <span className="lh-featured-cat" style={{ color: catMeta(featuredGuide.category).color }}>
-                {catMeta(featuredGuide.category).icon} {featuredGuide.category}
+                {catMeta(featuredGuide.category).Icon && React.createElement(catMeta(featuredGuide.category).Icon, { size: 13 })}
+                {' '}{featuredGuide.category}
               </span>
               <h2 className="lh-featured-title">{featuredGuide.title}</h2>
               <div className="lh-featured-meta">
@@ -335,7 +320,7 @@ function FashionLearning({ onShopCulture }) {
         {!loading && culturalGuides.length > 0 && catFilter === 'All' && !search && tab === 'guides' && (
           <div className="lh-cultural-section">
             <div className="lh-section-header">
-              <h3 className="lh-section-title">🌍 Cultural Fashion</h3>
+              <h3 className="lh-section-title"><CultureIcon size={16} /> Cultural Fashion</h3>
               <button className="lh-section-link" onClick={() => setCatFilter('Cultural Fashion')}>
                 See all →
               </button>
@@ -343,12 +328,13 @@ function FashionLearning({ onShopCulture }) {
             <div className="lh-cultural-row">
               {culturalGuides.map(g => {
                 const cm = catMeta(g.category);
+                const CmIcon = cm.Icon;
                 return (
                   <div key={g.id} className="lh-cultural-card" onClick={() => openGuide(g.id)}>
                     <div className="lh-cultural-img" style={{ backgroundImage: `url(${g.image_url})` }} />
                     <div className="lh-cultural-info">
                       <span className="lh-cultural-badge" style={{ background: cm.bg, color: cm.color }}>
-                        {cm.icon} {g.category}
+                        {CmIcon && <CmIcon size={11} />} {g.category}
                       </span>
                       <h4 className="lh-cultural-title">{g.title}</h4>
                       <div className="lh-cultural-meta">
@@ -384,13 +370,13 @@ function FashionLearning({ onShopCulture }) {
               className={`lh-tab lh-tab-beginner ${tab === 'beginner' ? 'active' : ''}`}
               onClick={() => { setTab('beginner'); setCatFilter('All'); setSearch(''); }}
             >
-              👗 Outfit Help
+              <OutfitHelpIcon size={15} /> Outfit Help
             </button>
             <button
               className={`lh-tab lh-tab-quiz ${tab === 'quiz' ? 'active' : ''}`}
               onClick={() => { setTab('quiz'); setCatFilter('All'); setSearch(''); }}
             >
-              ✨ Style Quiz
+              <QuizIcon size={15} /> Style Quiz
             </button>
           </div>
 
@@ -429,7 +415,6 @@ function FashionLearning({ onShopCulture }) {
               className={`lh-chip ${catFilter === c ? 'active' : ''}`}
               onClick={() => setCatFilter(c)}
             >
-              {c !== 'All' && catMeta(c).icon && tab === 'guides' ? `${catMeta(c).icon} ` : ''}
               {c}
             </button>
           ))}
@@ -445,7 +430,7 @@ function FashionLearning({ onShopCulture }) {
           )}
           {!loading && visible.length === 0 && (
             <div className="lh-empty">
-              <span className="lh-empty-icon">📖</span>
+              <span className="lh-empty-icon"><BookIcon size={36} /></span>
               <h3>Nothing found</h3>
               <p>Try a different search term or category</p>
               <button className="lh-back-btn" onClick={() => { setSearch(''); setCatFilter('All'); }}>
@@ -457,6 +442,7 @@ function FashionLearning({ onShopCulture }) {
             <div className="lh-grid">
               {visibleGuides.map(g => {
                 const cm = catMeta(g.category);
+                const CmIcon = cm.Icon;
                 return (
                   <div key={g.id} className="lh-guide-card" onClick={() => openGuide(g.id)}>
                     <div className="lh-card-img-wrap">
@@ -465,7 +451,7 @@ function FashionLearning({ onShopCulture }) {
                     </div>
                     <div className="lh-card-body">
                       <span className="lh-card-cat" style={{ background: cm.bg, color: cm.color }}>
-                        {cm.icon} {g.category}
+                        {CmIcon && <CmIcon size={11} />} {g.category}
                       </span>
                       <h3 className="lh-card-title">{g.title}</h3>
                       <p className="lh-card-excerpt">{g.content?.slice(0, 110)}…</p>

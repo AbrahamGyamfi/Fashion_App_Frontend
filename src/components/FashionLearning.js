@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './FashionLearning.css';
 import StyleQuiz from './StyleQuiz';
+import BeginnerSection from './BeginnerSection';
 
 /* ── Icons ── */
 const EyeIcon = () => (
@@ -231,6 +232,7 @@ function FashionLearning({ onShopCulture }) {
   const chips = tab === 'guides' ? GUIDE_CATS : OUTFIT_CATS;
   const visible = tab === 'guides' ? visibleGuides : visibleOutfits;
   const showQuiz = tab === 'quiz';
+  const showBeginner = tab === 'beginner';
 
   /* ════════════════════ DETAIL: GUIDE ════════════════════ */
   if (activeGuide) {
@@ -379,6 +381,12 @@ function FashionLearning({ onShopCulture }) {
               {outfits.length > 0 && <span className="lh-tab-count">{outfits.length}</span>}
             </button>
             <button
+              className={`lh-tab lh-tab-beginner ${tab === 'beginner' ? 'active' : ''}`}
+              onClick={() => { setTab('beginner'); setCatFilter('All'); setSearch(''); }}
+            >
+              👗 Outfit Help
+            </button>
+            <button
               className={`lh-tab lh-tab-quiz ${tab === 'quiz' ? 'active' : ''}`}
               onClick={() => { setTab('quiz'); setCatFilter('All'); setSearch(''); }}
             >
@@ -401,13 +409,20 @@ function FashionLearning({ onShopCulture }) {
           </div>
         </div>
 
+        {/* ── Outfit Help (Beginner) ── */}
+        {showBeginner && (
+          <BeginnerSection
+            onViewOutfits={() => { setTab('outfits'); setCatFilter('All'); setSearch(''); }}
+          />
+        )}
+
         {/* ── Style Quiz ── */}
         {showQuiz && (
           <StyleQuiz onShopCulture={onShopCulture} />
         )}
 
-        {/* ── Category chips (hidden when quiz tab active) ── */}
-        {!showQuiz && <div className="lh-chips">
+        {/* ── Category chips (hidden when quiz/beginner tab active) ── */}
+        {!showQuiz && !showBeginner && <div className="lh-chips">
           {chips.map(c => (
             <button
               key={c}
@@ -421,8 +436,8 @@ function FashionLearning({ onShopCulture }) {
           <span className="lh-count">{visible.length} {tab === 'guides' ? 'guide' : 'outfit'}{visible.length !== 1 ? 's' : ''}</span>
         </div>}
 
-        {/* ── Content grid (hidden when quiz tab active) ── */}
-        {!showQuiz && <>
+        {/* ── Content grid (hidden when quiz/beginner tab active) ── */}
+        {!showQuiz && !showBeginner && <>
           {loading && (
             <div className="lh-grid">
               {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} />)}

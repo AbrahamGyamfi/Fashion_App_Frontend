@@ -812,3 +812,7 @@
 @media (max-width: 768px) {
   .lh-related-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* ── Outfit Help tab ── */
+.lh-tab-beginner { color: #e67e22 !important; }
+.lh-tab-beginner.active { border-bottom-color: #e67e22 !important; color: #e67e22 !important; }

@@ -1,420 +1,708 @@
-/* ============================================================
-   FashionLearning — Editorial learning hub
-   ============================================================ */
+/* ══════════════════════════════════════
+   Fashion Learning Hub
+   ══════════════════════════════════════ */
 
-.fashion-learning {
-  padding: 48px 24px 80px;
-  max-width: 1280px;
-  margin: 0 auto;
-}
+.fashion-learning { padding: 0; max-width: 100%; }
 
-/* ── Header ─────────────────────────────────────── */
-.learning-header {
+/* ── Hero ── */
+.lh-hero {
+  background: linear-gradient(160deg, #0a0a0a 0%, #1c1c1c 55%, #0d1a0d 100%);
+  padding: 72px 24px 60px;
   text-align: center;
-  margin-bottom: 48px;
-  padding: 56px 24px 0;
+  position: relative;
+  overflow: hidden;
 }
 
-.learning-eyebrow {
+.lh-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=50') center/cover;
+  opacity: 0.08;
+}
+
+.lh-hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+
+.lh-hero-eyebrow {
   display: inline-block;
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 3px;
-  color: #C9A84C;
-  margin-bottom: 14px;
+  color: #c9a84c;
   border: 1px solid rgba(201,168,76,0.3);
-  padding: 5px 14px;
+  padding: 4px 16px;
   border-radius: 100px;
+  margin-bottom: 18px;
 }
 
-.learning-header h1 {
-  font-family: 'Bodoni Moda', serif;
-  font-size: 3rem;
-  font-weight: 700;
-  letter-spacing: -1px;
-  margin-bottom: 12px;
-  color: #1c1a17;
+.lh-hero-title {
+  font-size: clamp(32px, 5vw, 60px);
+  font-weight: 900;
+  letter-spacing: -2px;
+  line-height: 1.0;
+  color: #fff;
+  margin: 0 0 16px;
 }
 
-.learning-header p {
-  color: #6b6560;
-  font-size: 16px;
-  font-weight: 300;
-  max-width: 520px;
-  margin: 0 auto;
-  line-height: 1.7;
+.lh-hero-title em { font-style: italic; color: #c9a84c; }
+
+.lh-hero-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.8;
+  max-width: 500px;
+  margin: 0 auto 20px;
 }
 
-/* ── Tabs ────────────────────────────────────────── */
-.tabs {
+.lh-hero-stats {
   display: flex;
-  gap: 0;
   justify-content: center;
-  margin-bottom: 40px;
-  border-bottom: 2px solid #eeece9;
+  gap: 28px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
 }
 
-.tabs button {
-  padding: 12px 32px;
+.lh-hero-stats strong { color: #c9a84c; font-size: 18px; display: block; }
+
+/* ── Body ── */
+.lh-body {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 48px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ── Featured Guide ── */
+.lh-featured {
+  position: relative;
+  height: 340px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.25s;
+}
+
+.lh-featured:hover { transform: scale(1.005); }
+
+.lh-featured-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s;
+}
+
+.lh-featured:hover .lh-featured-img { transform: scale(1.04); }
+
+.lh-featured-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.82) 40%, transparent 100%);
+}
+
+.lh-featured-content {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+  max-width: 520px;
+}
+
+.lh-featured-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #c9a84c;
+}
+
+.lh-featured-cat { font-size: 12px; font-weight: 700; }
+
+.lh-featured-title {
+  font-size: clamp(22px, 3vw, 32px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.lh-featured-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+
+.lh-featured-meta span { display: flex; align-items: center; gap: 4px; }
+
+/* ── Cultural Spotlight ── */
+.lh-cultural-section { display: flex; flex-direction: column; gap: 16px; }
+
+.lh-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lh-section-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #111;
+  margin: 0;
+}
+
+.lh-section-link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #e67e22;
   background: none;
   border: none;
+  cursor: pointer;
+}
+
+.lh-cultural-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.lh-cultural-card {
+  background: #fff;
+  border: 1px solid #ece9e3;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.lh-cultural-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.lh-cultural-img {
+  height: 160px;
+  background-size: cover;
+  background-position: center top;
+}
+
+.lh-cultural-info { padding: 14px 16px; }
+
+.lh-cultural-badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 100px;
+  margin-bottom: 8px;
+}
+
+.lh-cultural-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 8px;
+  line-height: 1.3;
+}
+
+.lh-cultural-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 11px;
+  color: #aaa;
+}
+
+.lh-cultural-meta span { display: flex; align-items: center; gap: 3px; }
+
+/* ── Toolbar ── */
+.lh-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #ece9e3;
+  padding-bottom: 0;
+  margin-bottom: -24px;
+}
+
+.lh-tabs {
+  display: flex;
+  gap: 0;
+  flex: 1;
+}
+
+.lh-tab {
+  padding: 12px 22px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  color: #8a8278;
-  border-bottom: 2.5px solid transparent;
-  margin-bottom: -2px;
-  transition: color 0.2s, border-color 0.2s;
-  letter-spacing: 0.3px;
-  text-transform: uppercase;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
 }
 
-.tabs button.active {
-  color: #0a0a0a;
-  border-bottom-color: #0a0a0a;
+.lh-tab.active { color: #111; border-bottom-color: #111; }
+.lh-tab:hover:not(.active) { color: #333; }
+
+.lh-tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  background: #eee;
+  color: #666;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 100px;
 }
 
-.tabs button:hover { color: #1c1a17; }
+.lh-tab.active .lh-tab-count { background: #111; color: #fff; }
 
-/* ── Content Grid ────────────────────────────────── */
-.content-grid {
+/* ── Search ── */
+.lh-search-wrap {
+  position: relative;
+  width: 260px;
+}
+
+.lh-search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bbb;
+  pointer-events: none;
+}
+
+.lh-search {
+  width: 100%;
+  padding: 9px 32px 9px 34px;
+  border: 1.5px solid #e0dbd5;
+  border-radius: 100px;
+  font-size: 13px;
+  color: #333;
+  background: #fff;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.lh-search:focus { border-color: #111; }
+
+.lh-search-clear {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #bbb;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+}
+
+/* ── Chips ── */
+.lh-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.lh-chip {
+  padding: 6px 15px;
+  border: 1.5px solid #e0dbd5;
+  border-radius: 100px;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.lh-chip:hover { border-color: #111; color: #111; }
+.lh-chip.active { background: #111; border-color: #111; color: #fff; }
+
+.lh-count {
+  margin-left: auto;
+  font-size: 11px;
+  color: #bbb;
+  font-weight: 500;
+}
+
+/* ── Cards Grid ── */
+.lh-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 24px;
 }
 
-/* ── Cards ───────────────────────────────────────── */
-.guide-card,
-.outfit-card {
-  background: white;
-  border-radius: 14px;
+.lh-guide-card,
+.lh-outfit-card {
+  background: #fff;
+  border: 1px solid #ece9e3;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.07), 0 2px 12px rgba(0,0,0,0.04);
   cursor: pointer;
-  transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
-              box-shadow 0.35s cubic-bezier(0.16,1,0.3,1);
-  border: 1px solid #f2f0ed;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
 }
 
-.guide-card:hover,
-.outfit-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+.lh-guide-card:hover,
+.lh-outfit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
 }
 
-.guide-card img,
-.outfit-card img {
+.lh-card-img-wrap { position: relative; overflow: hidden; }
+
+.lh-card-img {
   width: 100%;
   height: 220px;
   object-fit: cover;
   display: block;
-  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  transition: transform 0.5s;
 }
 
-.guide-card:hover img,
-.outfit-card:hover img {
-  transform: scale(1.05);
+.lh-guide-card:hover .lh-card-img,
+.lh-outfit-card:hover .lh-card-img { transform: scale(1.05); }
+
+.lh-card-read-time {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
 }
 
-/* Wrapping img in an overflow-hidden container */
-.guide-card > img,
-.outfit-card > img {
-  overflow: hidden;
+.lh-outfit-badges-overlay {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
 }
 
-.card-content { padding: 20px; }
+.lh-overlay-badge {
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 100px;
+}
 
-.category {
+.lh-card-body {
+  padding: 18px 18px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lh-card-cat {
   display: inline-block;
-  background: #f2f0ed;
-  color: #6b6560;
-  padding: 4px 12px;
-  border-radius: 100px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.card-content h3 {
-  font-family: 'Bodoni Moda', serif;
-  font-size: 1.35rem;
-  font-weight: 700;
-  margin: 6px 0 8px;
-  letter-spacing: -0.3px;
-  color: #1c1a17;
-  line-height: 1.25;
-}
-
-.card-content p {
-  color: #6b6560;
-  margin: 6px 0;
-  line-height: 1.65;
-  font-size: 14px;
-}
-
-.card-meta {
-  display: flex;
-  gap: 16px;
-  margin-top: 12px;
-  color: #a09890;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.outfit-badges {
-  display: flex;
-  gap: 6px;
-  margin: 12px 0;
-  flex-wrap: wrap;
-}
-
-.outfit-badges span {
-  background: #0a0a0a;
-  color: white;
-  padding: 4px 12px;
+  padding: 3px 10px;
   border-radius: 100px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.3px;
+  width: fit-content;
+  letter-spacing: 0.04em;
 }
 
-/* ── Loading skeleton for learning ─────────────── */
-.learning-loading {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 24px;
-}
-
-.learning-skeleton {
-  background: white;
-  border-radius: 14px;
+.lh-card-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #111;
+  margin: 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }
 
-.loading-text {
+.lh-card-excerpt {
+  font-size: 0.82rem;
+  color: #777;
+  line-height: 1.65;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+.lh-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px solid #f0ece6;
+  font-size: 11px;
+  color: #bbb;
+  margin-top: auto;
+}
+
+.lh-card-footer span { display: flex; align-items: center; gap: 4px; }
+
+.lh-read-more { font-size: 11px; font-weight: 700; color: #e67e22; }
+
+.lh-outfit-meta { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.lh-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  background: #f0ece6;
+  color: #666;
+  border-radius: 100px;
+}
+
+.lh-badge.accent { background: #111; color: #fff; }
+
+/* ── Empty State ── */
+.lh-empty {
   text-align: center;
-  padding: 64px;
-  font-size: 15px;
-  color: #a09890;
-  font-style: italic;
+  padding: 80px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #888;
 }
 
-/* ── Back button ────────────────────────────────── */
-.back-btn {
+.lh-empty-icon { font-size: 2.5rem; }
+.lh-empty h3 { margin: 0; font-size: 1.1rem; color: #333; }
+.lh-empty p  { margin: 0; font-size: 0.85rem; }
+
+/* ── Skeleton ── */
+.lh-skeleton {
+  background: #fff;
+  border: 1px solid #ece9e3;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.lh-skel-img { height: 220px; }
+.lh-skel-body { padding: 18px; display: flex; flex-direction: column; gap: 10px; }
+.lh-skel-line { height: 12px; border-radius: 6px; }
+.lh-skel-line.short  { width: 35%; }
+.lh-skel-line.medium { width: 60%; }
+
+.shimmer {
+  background: linear-gradient(90deg, #f0ece6 25%, #e8e4dd 50%, #f0ece6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+/* ── Detail View ── */
+.lh-detail-body {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.lh-back-btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background: none;
-  border: 1.5px solid #e8e4df;
-  color: #6b6560;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-bottom: 32px;
+  border: 1.5px solid #e0dbd5;
+  color: #666;
+  font-size: 12px;
+  font-weight: 700;
   padding: 8px 18px;
-  border-radius: 6px;
-  transition: background 0.2s, border-color 0.2s, color 0.2s;
-  letter-spacing: 0.2px;
+  border-radius: 100px;
+  cursor: pointer;
+  margin-bottom: 36px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: all 0.15s;
 }
 
-.back-btn:hover {
-  background: #f7f6f4;
-  border-color: #c5c0b8;
-  color: #1c1a17;
-}
+.lh-back-btn:hover { background: #f5f5f5; color: #111; border-color: #111; }
 
-/* ── Detail view ────────────────────────────────── */
-.guide-detail,
-.outfit-detail {
+.lh-detail-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1.1fr;
   gap: 56px;
   align-items: start;
 }
 
-.guide-detail img,
-.outfit-detail img {
+.lh-detail-img-wrap {
+  position: sticky;
+  top: 80px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+}
+
+.lh-detail-img {
   width: 100%;
-  border-radius: 14px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
   display: block;
+  aspect-ratio: 3/4;
+  object-fit: cover;
 }
 
-.guide-content,
-.outfit-content {
-  padding: 8px 0;
-}
+.lh-detail-content { padding: 4px 0 40px; }
 
-.guide-category {
+.lh-detail-cat {
   display: inline-block;
-  background: #0a0a0a;
-  color: white;
-  padding: 5px 14px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 100px;
+  margin-bottom: 14px;
+  letter-spacing: 0.06em;
+}
+
+.lh-detail-title {
+  font-size: clamp(24px, 3.5vw, 40px);
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  color: #111;
+  margin: 0 0 16px;
+}
+
+.lh-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 12px;
+  color: #aaa;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ece9e3;
+  margin-bottom: 24px;
+}
+
+.lh-meta-item { display: flex; align-items: center; gap: 4px; }
+
+.lh-detail-text {
+  font-size: 15px;
+  line-height: 1.85;
+  color: #444;
+  margin: 0 0 24px;
+}
+
+.lh-detail-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+
+.lh-tag {
+  background: #f5f0e8;
+  border: 1px solid #e5dfd5;
+  padding: 4px 12px;
   border-radius: 100px;
   font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-bottom: 16px;
-}
-
-.guide-content h1,
-.outfit-content h1 {
-  font-family: 'Bodoni Moda', serif;
-  font-size: 2.6rem;
-  margin: 0 0 20px;
-  letter-spacing: -1px;
-  color: #1c1a17;
-  font-weight: 700;
-  line-height: 1.1;
-}
-
-.guide-meta {
-  display: flex;
-  gap: 20px;
-  color: #8a8278;
-  margin-bottom: 24px;
-  font-size: 13px;
   font-weight: 500;
-  flex-wrap: wrap;
+  color: #666;
 }
 
-.guide-meta span {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.guide-text,
-.outfit-description {
-  line-height: 1.85;
-  color: #4a453e;
-  font-size: 16px;
-  margin-bottom: 28px;
-}
-
-.guide-tags {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 28px;
-}
-
-.tag {
-  background: #f2f0ed;
-  padding: 5px 12px;
-  border-radius: 100px;
-  font-size: 13px;
-  color: #6b6560;
-  font-weight: 500;
-}
-
-.like-btn {
+.lh-like-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #0a0a0a;
-  color: white;
+  background: #111;
+  color: #fff;
   border: none;
   padding: 12px 28px;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
-  letter-spacing: 0.2px;
-}
-
-.like-btn:hover {
-  background: #2a2a2a;
-  transform: translateY(-1px);
-}
-
-.outfit-meta {
-  display: flex;
-  gap: 8px;
-  margin: 16px 0 24px;
-  flex-wrap: wrap;
-}
-
-.outfit-meta .badge {
-  background: #f2f0ed;
-  color: #4a453e;
-  padding: 6px 14px;
   border-radius: 100px;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-/* ── Shop the look products ─────────────────────── */
-.outfit-products {
-  margin-top: 40px;
-  padding-top: 28px;
-  border-top: 2px solid #f2f0ed;
-}
-
-.outfit-products h3 {
-  font-family: 'Bodoni Moda', serif;
-  font-size: 1.6rem;
-  margin-bottom: 20px;
-  color: #1c1a17;
-  font-weight: 700;
-}
-
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 16px;
-}
-
-.product-mini {
-  text-align: center;
-}
-
-.product-mini img {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-  border-radius: 10px;
-  margin-bottom: 8px;
-  display: block;
-}
-
-.product-mini h4 {
   font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 4px;
-  color: #1c1a17;
-  line-height: 1.3;
-}
-
-.product-mini p {
-  font-size: 14px;
   font-weight: 700;
-  color: #1c1a17;
-  margin-bottom: 2px;
+  cursor: pointer;
+  transition: background 0.15s;
 }
 
-.product-mini .designer {
+.lh-like-btn:hover { background: #333; }
+
+.lh-outfit-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+
+/* ── Shop This Look ── */
+.lh-shop-look { margin-top: 32px; padding-top: 24px; border-top: 1px solid #ece9e3; }
+
+.lh-shop-look h3 {
+  font-size: 18px;
+  font-weight: 800;
+  margin: 0 0 16px;
+}
+
+.lh-products-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 14px;
+}
+
+.lh-product-mini { text-align: center; }
+
+.lh-product-img {
+  border-radius: 8px;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  margin-bottom: 8px;
+  background: #f5f5f5;
+}
+
+.lh-product-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.lh-product-name {
+  display: block;
   font-size: 11px;
-  color: #a09890;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 3px;
 }
 
-/* ── Responsive ─────────────────────────────────── */
+.lh-product-price {
+  display: block;
+  font-size: 12px;
+  font-weight: 800;
+  color: #111;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .lh-detail-grid { grid-template-columns: 1fr; gap: 28px; }
+  .lh-detail-img-wrap { position: static; }
+  .lh-detail-img { aspect-ratio: 16/9; }
+}
+
 @media (max-width: 768px) {
-  .fashion-learning { padding: 32px 16px 64px; }
-  .learning-header h1 { font-size: 2rem; }
-  .guide-detail,
-  .outfit-detail { grid-template-columns: 1fr; gap: 24px; }
-  .content-grid { grid-template-columns: 1fr; }
-  .guide-content h1,
-  .outfit-content h1 { font-size: 1.9rem; }
+  .lh-hero { padding: 52px 20px 44px; }
+  .lh-cultural-row { grid-template-columns: 1fr; }
+  .lh-featured { height: 260px; }
+  .lh-featured-content { max-width: 100%; padding: 24px; }
+  .lh-grid { grid-template-columns: 1fr; }
+  .lh-toolbar { flex-direction: column; align-items: flex-start; }
+  .lh-search-wrap { width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .lh-grid { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .lh-card-img { height: 160px; }
 }

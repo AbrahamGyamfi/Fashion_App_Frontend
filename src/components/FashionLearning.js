@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './FashionLearning.css';
+import StyleQuiz from './StyleQuiz';
 
 /* ── Icons ── */
 const EyeIcon = () => (
@@ -45,6 +46,24 @@ function readTime(text) {
 const GUIDE_CATS  = ['All', 'Cultural Fashion', 'Styling Tips', 'Trends', 'Fashion Education'];
 const OUTFIT_CATS = ['All', 'Casual', 'Formal', 'Wedding', 'Work', 'Evening'];
 
+/* ── Reading progress hook ── */
+function useReadProgress(ref) {
+  const [pct, setPct] = useState(0);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const onScroll = () => {
+      const top = el.getBoundingClientRect().top;
+      const height = el.scrollHeight - window.innerHeight;
+      const scrolled = Math.max(0, -top);
+      setPct(Math.min(100, Math.round((scrolled / height) * 100)));
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [ref]);
+  return pct;
+}
+
 /* ── Skeleton ── */
 const Skeleton = () => (
   <div className="lh-skeleton">
@@ -58,7 +77,86 @@ const Skeleton = () => (
 );
 
 /* ══════════════════════════════════════════════════════ */
-function FashionLearning() {
+function GuideDetail({ guide, guides, onBack, onLike, onOpen }) {
+  const ref = useRef(null);
+  const progress = useReadProgress(ref);
+  const related = guides
+    .filter(g => g.id !== guide.id && g.category === guide.category)
+    .slice(0, 3);
+  const cm = catMeta(guide.category);
+
+  return (
+    <div className="fashion-learning" ref={ref}>
+      {/* Reading progress bar */}
+      <div className="lh-read-progress">
+        <div className="lh-read-progress-fill" style={{ width: `${progress}%` }} />
+      </div>
+
+      <div className="lh-detail-body">
+        <button className="lh-back-btn" onClick={onBack}>
+          <BackIcon /> Back to Learning Hub
+        </button>
+        <div className="lh-detail-grid">
+          <div className="lh-detail-img-wrap">
+            <img src={guide.image_url} alt={guide.title} className="lh-detail-img" />
+          </div>
+          <div className="lh-detail-content">
+            <span className="lh-detail-cat" style={{ background: cm.bg, color: cm.color }}>
+              {cm.icon} {guide.category}
+            </span>
+            <h1 className="lh-detail-title">{guide.title}</h1>
+            <div className="lh-detail-meta">
+              {guide.first_name && (
+                <span className="lh-meta-item">By {guide.first_name} {guide.last_name}</span>
+              )}
+              <span className="lh-meta-item"><ClockIcon /> {readTime(guide.content)}</span>
+              <span className="lh-meta-item"><EyeIcon /> {guide.views} views</span>
+              <span className="lh-meta-item"><HeartIcon /> {guide.likes} likes</span>
+              <span className="lh-meta-item lh-progress-meta">{progress}% read</span>
+            </div>
+            <p className="lh-detail-text">{guide.content}</p>
+            {guide.tags?.length > 0 && (
+              <div className="lh-detail-tags">
+                {guide.tags.map(t => <span key={t} className="lh-tag">#{t}</span>)}
+              </div>
+            )}
+            <button className="lh-like-btn" onClick={() => onLike('guides', guide.id)}>
+              <HeartIcon /> Like this guide
+            </button>
+          </div>
+        </div>
+
+        {/* Related guides */}
+        {related.length > 0 && (
+          <div className="lh-related">
+            <h3 className="lh-related-title">Related Guides</h3>
+            <div className="lh-related-grid">
+              {related.map(g => {
+                const rcm = catMeta(g.category);
+                return (
+                  <div key={g.id} className="lh-related-card" onClick={() => onOpen(g.id)}>
+                    <div className="lh-related-img-wrap">
+                      <img src={g.image_url} alt={g.title} className="lh-related-img" />
+                    </div>
+                    <div className="lh-related-body">
+                      <span className="lh-card-cat" style={{ background: rcm.bg, color: rcm.color }}>
+                        {rcm.icon} {g.category}
+                      </span>
+                      <h4 className="lh-related-card-title">{g.title}</h4>
+                      <span className="lh-related-read-time"><ClockIcon /> {readTime(g.content)}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function FashionLearning({ onShopCulture }) {
   const [tab, setTab]         = useState('guides');
   const [guides, setGuides]   = useState([]);
   const [outfits, setOutfits] = useState([]);
@@ -132,48 +230,18 @@ function FashionLearning() {
 
   const chips = tab === 'guides' ? GUIDE_CATS : OUTFIT_CATS;
   const visible = tab === 'guides' ? visibleGuides : visibleOutfits;
+  const showQuiz = tab === 'quiz';
 
   /* ════════════════════ DETAIL: GUIDE ════════════════════ */
   if (activeGuide) {
-    const cm = catMeta(activeGuide.category);
     return (
-      <div className="fashion-learning">
-        <div className="lh-detail-body">
-          <button className="lh-back-btn" onClick={() => setActiveGuide(null)}>
-            <BackIcon /> Back to Learning Hub
-          </button>
-          <div className="lh-detail-grid">
-            <div className="lh-detail-img-wrap">
-              <img src={activeGuide.image_url} alt={activeGuide.title} className="lh-detail-img" />
-            </div>
-            <div className="lh-detail-content">
-              <span className="lh-detail-cat" style={{ background: cm.bg, color: cm.color }}>
-                {cm.icon} {activeGuide.category}
-              </span>
-              <h1 className="lh-detail-title">{activeGuide.title}</h1>
-              <div className="lh-detail-meta">
-                {activeGuide.first_name && (
-                  <span className="lh-meta-item">By {activeGuide.first_name} {activeGuide.last_name}</span>
-                )}
-                <span className="lh-meta-item"><ClockIcon /> {readTime(activeGuide.content)}</span>
-                <span className="lh-meta-item"><EyeIcon /> {activeGuide.views} views</span>
-                <span className="lh-meta-item"><HeartIcon /> {activeGuide.likes} likes</span>
-              </div>
-              <p className="lh-detail-text">{activeGuide.content}</p>
-              {activeGuide.tags?.length > 0 && (
-                <div className="lh-detail-tags">
-                  {activeGuide.tags.map(t => (
-                    <span key={t} className="lh-tag">#{t}</span>
-                  ))}
-                </div>
-              )}
-              <button className="lh-like-btn" onClick={() => handleLike('guides', activeGuide.id)}>
-                <HeartIcon /> Like this guide
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+      <GuideDetail
+        guide={activeGuide}
+        guides={guides}
+        onBack={() => setActiveGuide(null)}
+        onLike={handleLike}
+        onOpen={openGuide}
+      />
     );
   }
 
@@ -310,6 +378,12 @@ function FashionLearning() {
               Outfit Ideas
               {outfits.length > 0 && <span className="lh-tab-count">{outfits.length}</span>}
             </button>
+            <button
+              className={`lh-tab lh-tab-quiz ${tab === 'quiz' ? 'active' : ''}`}
+              onClick={() => { setTab('quiz'); setCatFilter('All'); setSearch(''); }}
+            >
+              ✨ Style Quiz
+            </button>
           </div>
 
           <div className="lh-search-wrap">
@@ -327,8 +401,13 @@ function FashionLearning() {
           </div>
         </div>
 
-        {/* ── Category chips ── */}
-        <div className="lh-chips">
+        {/* ── Style Quiz ── */}
+        {showQuiz && (
+          <StyleQuiz onShopCulture={onShopCulture} />
+        )}
+
+        {/* ── Category chips (hidden when quiz tab active) ── */}
+        {!showQuiz && <div className="lh-chips">
           {chips.map(c => (
             <button
               key={c}
@@ -340,76 +419,83 @@ function FashionLearning() {
             </button>
           ))}
           <span className="lh-count">{visible.length} {tab === 'guides' ? 'guide' : 'outfit'}{visible.length !== 1 ? 's' : ''}</span>
-        </div>
+        </div>}
 
-        {/* ── Content grid ── */}
-        {loading ? (
-          <div className="lh-grid">
-            {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} />)}
-          </div>
-        ) : visible.length === 0 ? (
-          <div className="lh-empty">
-            <span className="lh-empty-icon">📖</span>
-            <h3>Nothing found</h3>
-            <p>Try a different search term or category</p>
-            <button className="lh-back-btn" onClick={() => { setSearch(''); setCatFilter('All'); }}>
-              Clear filters
-            </button>
-          </div>
-        ) : tab === 'guides' ? (
-          <div className="lh-grid">
-            {visibleGuides.map(g => {
-              const cm = catMeta(g.category);
-              return (
-                <div key={g.id} className="lh-guide-card" onClick={() => openGuide(g.id)}>
+        {/* ── Content grid (hidden when quiz tab active) ── */}
+        {!showQuiz && <>
+          {loading && (
+            <div className="lh-grid">
+              {Array.from({ length: 6 }).map((_, i) => <Skeleton key={i} />)}
+            </div>
+          )}
+          {!loading && visible.length === 0 && (
+            <div className="lh-empty">
+              <span className="lh-empty-icon">📖</span>
+              <h3>Nothing found</h3>
+              <p>Try a different search term or category</p>
+              <button className="lh-back-btn" onClick={() => { setSearch(''); setCatFilter('All'); }}>
+                Clear filters
+              </button>
+            </div>
+          )}
+          {!loading && visible.length > 0 && tab === 'guides' && (
+            <div className="lh-grid">
+              {visibleGuides.map(g => {
+                const cm = catMeta(g.category);
+                return (
+                  <div key={g.id} className="lh-guide-card" onClick={() => openGuide(g.id)}>
+                    <div className="lh-card-img-wrap">
+                      <img src={g.image_url} alt={g.title} loading="lazy" className="lh-card-img" />
+                      <span className="lh-card-read-time"><ClockIcon /> {readTime(g.content)}</span>
+                    </div>
+                    <div className="lh-card-body">
+                      <span className="lh-card-cat" style={{ background: cm.bg, color: cm.color }}>
+                        {cm.icon} {g.category}
+                      </span>
+                      <h3 className="lh-card-title">{g.title}</h3>
+                      <p className="lh-card-excerpt">{g.content?.slice(0, 110)}…</p>
+                      <div className="lh-card-footer">
+                        <span><EyeIcon /> {g.views}</span>
+                        <span><HeartIcon /> {g.likes}</span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          {!loading && visible.length > 0 && tab === 'outfits' && (
+            <div className="lh-grid">
+              {visibleOutfits.map(o => (
+                <div key={o.id} className="lh-outfit-card" onClick={() => openOutfit(o.id)}>
                   <div className="lh-card-img-wrap">
-                    <img src={g.image_url} alt={g.title} loading="lazy" className="lh-card-img" />
-                    <span className="lh-card-read-time"><ClockIcon /> {readTime(g.content)}</span>
+                    <img src={o.image_url} alt={o.title} loading="lazy" className="lh-card-img" />
+                    <div className="lh-outfit-badges-overlay">
+                      {o.style_type && <span className="lh-overlay-badge">{o.style_type}</span>}
+                    </div>
                   </div>
                   <div className="lh-card-body">
-                    <span className="lh-card-cat" style={{ background: cm.bg, color: cm.color }}>
-                      {cm.icon} {g.category}
-                    </span>
-                    <h3 className="lh-card-title">{g.title}</h3>
-                    <p className="lh-card-excerpt">{g.content?.slice(0, 110)}…</p>
+                    <h3 className="lh-card-title">{o.title}</h3>
+                    <p className="lh-card-excerpt">{o.description?.slice(0, 100)}…</p>
+                    <div className="lh-outfit-meta">
+                      {o.occasion && <span className="lh-badge">{o.occasion}</span>}
+                      {o.season   && <span className="lh-badge">{o.season}</span>}
+                    </div>
                     <div className="lh-card-footer">
-                      <span><EyeIcon /> {g.views}</span>
-                      <span><HeartIcon /> {g.likes}</span>
+                      <span><HeartIcon /> {o.likes}</span>
+                      <span className="lh-read-more">View Look →</span>
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="lh-grid">
-            {visibleOutfits.map(o => (
-              <div key={o.id} className="lh-outfit-card" onClick={() => openOutfit(o.id)}>
-                <div className="lh-card-img-wrap">
-                  <img src={o.image_url} alt={o.title} loading="lazy" className="lh-card-img" />
-                  <div className="lh-outfit-badges-overlay">
-                    {o.style_type && <span className="lh-overlay-badge">{o.style_type}</span>}
-                  </div>
-                </div>
-                <div className="lh-card-body">
-                  <h3 className="lh-card-title">{o.title}</h3>
-                  <p className="lh-card-excerpt">{o.description?.slice(0, 100)}…</p>
-                  <div className="lh-outfit-meta">
-                    {o.occasion && <span className="lh-badge">{o.occasion}</span>}
-                    {o.season   && <span className="lh-badge">{o.season}</span>}
-                  </div>
-                  <div className="lh-card-footer">
-                    <span><HeartIcon /> {o.likes}</span>
-                    <span className="lh-read-more">View Look →</span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
+        </>}
       </div>
     </div>
   );
 }
+
+FashionLearning.defaultProps = { onShopCulture: null };
 
 export default FashionLearning;

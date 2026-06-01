@@ -209,7 +209,7 @@ function App() {
 
       <main className="main-content">
         {storeView === 'learn' ? (
-          <FashionLearning />
+          <FashionLearning onShopCulture={(culture) => { setSelectedCulture(culture); setStoreView('shop'); }} />
         ) : (
           <>
             {/* Editorial hero */}

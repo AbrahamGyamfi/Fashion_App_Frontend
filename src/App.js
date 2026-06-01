@@ -18,7 +18,6 @@ import Orders from './pages/Orders';
 import Analytics from './pages/Analytics';
 import TrendBanner from './components/TrendBanner';
 import CollectionSpotlight from './components/CollectionSpotlight';
-import AfricanFashionGallery from './components/AfricanFashionGallery';
 
 const SkeletonCard = () => (
   <div className="skeleton-card">
@@ -224,8 +223,11 @@ function App() {
               </div>
             </div>
 
-            {/* Collection grid */}
-            <CollectionSpotlight onSelectCulture={handleCollectionSelect} />
+            {/* Collection grid — African card expands to full gallery with prices */}
+            <CollectionSpotlight
+              onSelectCulture={handleCollectionSelect}
+              onAddToCart={addToCart}
+            />
 
             {/* Shop section */}
             <div id="products-section" className="container">
@@ -337,10 +339,6 @@ function App() {
               )}
             </div>
 
-            {/* Ghana × Nigeria editorial — below products so shopping flow is uninterrupted */}
-            <AfricanFashionGallery
-              onShopAfrican={() => handleCollectionSelect('African')}
-            />
           </>
         )}
       </main>

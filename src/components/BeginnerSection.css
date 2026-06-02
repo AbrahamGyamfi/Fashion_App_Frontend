@@ -130,54 +130,100 @@
 }
 
 .beginner-occ-card {
-  background: #fff;
-  border: 1.5px solid #e5e0d8;
+  position: relative;
+  overflow: hidden;
   border-radius: 10px;
-  padding: 18px 14px;
+  border: none;
+  padding: 0;
   cursor: pointer;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 7px;
-  transition: all 0.18s;
+  height: 200px;
+  transition: transform 0.22s, box-shadow 0.22s;
 }
 
 .beginner-occ-card:hover {
-  border-color: #111;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.18);
 }
 
 .beginner-occ-card.active {
-  background: #111;
-  border-color: #111;
+  box-shadow: 0 0 0 3px #111, 0 12px 28px rgba(0,0,0,0.2);
 }
 
-.beginner-occ-card.active .beginner-occ-icon,
-.beginner-occ-card.active .beginner-occ-name,
-.beginner-occ-card.active .beginner-occ-level {
-  color: #fff;
+.beginner-occ-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+  transition: transform 0.5s;
+}
+
+.beginner-occ-card:hover .beginner-occ-img {
+  transform: scale(1.06);
+}
+
+.beginner-occ-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.82) 0%,
+    rgba(0,0,0,0.3) 50%,
+    rgba(0,0,0,0.08) 100%
+  );
+  transition: background 0.2s;
+}
+
+.beginner-occ-card.active .beginner-occ-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.9) 0%,
+    rgba(0,0,0,0.45) 60%,
+    rgba(0,0,0,0.15) 100%
+  );
+}
+
+.beginner-occ-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 14px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
 }
 
 .beginner-occ-icon {
   display: flex;
   align-items: center;
-  justify-content: center;
-  color: #333;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 2px;
 }
 
 .beginner-occ-name {
-  font-size: 0.78rem;
+  font-size: 0.85rem;
   font-weight: 800;
-  color: #111;
+  color: #fff;
+  line-height: 1.2;
+  text-align: left;
 }
 
 .beginner-occ-level {
   font-size: 0.65rem;
   font-weight: 600;
-  color: #999;
-  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.65);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.beginner-occ-active-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #fff;
 }
 
 /* ── Guide panel ── */
@@ -194,25 +240,34 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.beginner-guide-header {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 22px 28px 18px;
-  background: #f5f3f0;
-  border-bottom: 1px solid #e5e0d8;
+.beginner-guide-hero {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
 }
 
-.beginner-guide-header-icon {
+.beginner-guide-hero-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center top;
+}
+
+.beginner-guide-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.25) 100%);
+}
+
+.beginner-guide-hero-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 20px 28px;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  background: #111;
-  color: #fff;
-  border-radius: 8px;
-  flex-shrink: 0;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .beginner-guide-level {
@@ -220,36 +275,38 @@
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: #999;
-  margin-bottom: 3px;
+  letter-spacing: 0.16em;
+  color: rgba(255,255,255,0.7);
 }
 
 .beginner-guide-title {
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: #111;
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: #fff;
   margin: 0;
-  flex: 1;
+  line-height: 1.2;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 
 .beginner-guide-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 32px;
   height: 32px;
-  background: #ece9e3;
+  background: rgba(0,0,0,0.45);
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  color: #555;
-  margin-left: auto;
-  flex-shrink: 0;
+  color: #fff;
+  z-index: 2;
   transition: background 0.15s;
 }
 
-.beginner-guide-close:hover { background: #ddd; }
+.beginner-guide-close:hover { background: rgba(0,0,0,0.65); }
 
 /* ── Steps ── */
 .beginner-steps {

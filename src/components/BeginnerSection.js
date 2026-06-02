@@ -14,6 +14,7 @@ const OCCASIONS = [
     Icon: BriefcaseIcon,
     title: 'Job Interview',
     level: 'Formal',
+    image: '/images/occasions/interview.jpg',
     steps: [
       { step: 'Base', item: 'White button-down or plain blouse', tip: 'Fitted but not tight. Iron it.' },
       { step: 'Bottoms', item: 'Dark slim trousers or pencil skirt', tip: 'Black, navy, or charcoal. No patterns.' },
@@ -28,6 +29,7 @@ const OCCASIONS = [
     Icon: HeartOutlineIcon,
     title: 'First Date',
     level: 'Smart Casual',
+    image: '/images/occasions/date-night.jpg',
     steps: [
       { step: 'Statement', item: 'Bold top OR interesting trousers — pick ONE', tip: 'Not both. Balance is everything.' },
       { step: 'Pair with', item: 'A simple complementing piece', tip: 'Bold top? Plain jeans. Bold trousers? Simple top.' },
@@ -42,6 +44,7 @@ const OCCASIONS = [
     Icon: RingsIcon,
     title: 'Wedding Guest',
     level: 'Smart to Formal',
+    image: '/images/occasions/wedding-guest.jpg',
     steps: [
       { step: 'Dress', item: 'Midi or maxi in a safe colour', tip: 'Dusty rose, sage green, navy — never white.' },
       { step: 'Shoes', item: 'Heeled sandals or court shoes', tip: "Wedges if there's grass." },
@@ -56,6 +59,7 @@ const OCCASIONS = [
     Icon: SunIcon,
     title: 'Casual Day Out',
     level: 'Casual',
+    image: '/images/occasions/casual-day.jpg',
     steps: [
       { step: 'Base', item: 'Clean, well-fitted jeans (dark wash)', tip: 'No rips, no logos for versatility.' },
       { step: 'Top', item: 'Plain tee, subtle stripe, or neat polo', tip: 'Tucked in = smarter, untucked = relaxed.' },
@@ -70,6 +74,7 @@ const OCCASIONS = [
     Icon: MoonIcon,
     title: 'Night Out',
     level: 'Evening',
+    image: '/images/occasions/night-out.jpg',
     steps: [
       { step: 'Silhouette', item: 'Bodycon mini, satin slip, or wide-leg trousers + crop', tip: 'Pick a clear intention.' },
       { step: 'Shoes', item: 'Any heel makes it night-out ready', tip: 'Even a kitten heel counts.' },
@@ -84,6 +89,7 @@ const OCCASIONS = [
     Icon: CoffeeIcon,
     title: 'Brunch / Lunch',
     level: 'Casual to Smart',
+    image: '/images/occasions/brunch.jpg',
     steps: [
       { step: 'Outfit', item: 'Floaty midi dress or matching co-ord set', tip: 'Effortless is the goal.' },
       { step: 'Shoes', item: 'Strappy flat sandals or low mules', tip: 'Comfort first — you may walk.' },
@@ -98,6 +104,7 @@ const OCCASIONS = [
     Icon: GlobeIcon,
     title: 'African Cultural Event',
     level: 'Traditional to Formal',
+    image: '/images/occasions/cultural-event.jpg',
     steps: [
       { step: 'Fabric', item: 'Ankara, Kente, or Aso-Ebi — choose one', tip: 'One fabric per look. Let it speak.' },
       { step: 'Silhouette', item: 'Kaba & Slit, Iro & Buba, or fitted Ankara dress', tip: 'Match to the formality of the event.' },
@@ -112,6 +119,7 @@ const OCCASIONS = [
     Icon: ClipboardIcon,
     title: 'Everyday Work',
     level: 'Business Casual',
+    image: '/images/occasions/everyday-work.jpg',
     steps: [
       { step: 'Trousers', item: 'Tailored trousers or pencil skirt', tip: 'Fits properly — not too tight, not baggy.' },
       { step: 'Top', item: 'Neat blouse, turtleneck, or button-down', tip: 'Ironed. Always ironed.' },
@@ -186,9 +194,19 @@ function BeginnerSection({ onViewOutfits }) {
             className={`beginner-occ-card ${selected?.id === occ.id ? 'active' : ''}`}
             onClick={() => setSelected(selected?.id === occ.id ? null : occ)}
           >
-            <span className="beginner-occ-icon"><occ.Icon size={24} /></span>
-            <span className="beginner-occ-name">{occ.title}</span>
-            <span className="beginner-occ-level">{occ.level}</span>
+            <div
+              className="beginner-occ-img"
+              style={{ backgroundImage: `url(${occ.image})` }}
+            />
+            <div className="beginner-occ-overlay" />
+            <div className="beginner-occ-content">
+              <span className="beginner-occ-icon"><occ.Icon size={20} /></span>
+              <span className="beginner-occ-name">{occ.title}</span>
+              <span className="beginner-occ-level">{occ.level}</span>
+            </div>
+            {selected?.id === occ.id && (
+              <div className="beginner-occ-active-bar" />
+            )}
           </button>
         ))}
       </div>
@@ -196,9 +214,13 @@ function BeginnerSection({ onViewOutfits }) {
       {/* Expanded guide panel */}
       {selected && (
         <div className="beginner-guide-panel">
-          <div className="beginner-guide-header">
-            <div className="beginner-guide-header-icon"><selected.Icon size={20} /></div>
-            <div>
+          <div className="beginner-guide-hero">
+            <div
+              className="beginner-guide-hero-img"
+              style={{ backgroundImage: `url(${selected.image})` }}
+            />
+            <div className="beginner-guide-hero-overlay" />
+            <div className="beginner-guide-hero-text">
               <span className="beginner-guide-level">{selected.level}</span>
               <h3 className="beginner-guide-title">What to Wear: {selected.title}</h3>
             </div>

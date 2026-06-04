@@ -16,6 +16,7 @@ import Products from './pages/Products';
 import Designers from './pages/Designers';
 import Orders from './pages/Orders';
 import Analytics from './pages/Analytics';
+import AuditLogs from './pages/AuditLogs';
 import TrendBanner from './components/TrendBanner';
 import CollectionSpotlight from './components/CollectionSpotlight';
 
@@ -141,8 +142,9 @@ function App() {
       case 'products': return <Products />;
       case 'designers': return <Designers />;
       case 'orders': return <Orders />;
-      case 'analytics': return <Analytics />;
-      default: return <Dashboard />;
+      case 'analytics':  return <Analytics />;
+      case 'audit-logs': return <AuditLogs user={user} />;
+      default:           return <Dashboard />;
     }
   };
 
